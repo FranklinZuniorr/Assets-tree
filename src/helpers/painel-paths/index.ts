@@ -5,6 +5,7 @@ export const PAINEL_PATHS = {
     },
     companyInfo: {
         name: 'Company Info',
-        path: '/company-info'
+        path: '/company-info/:companyName/:id',
+        fnPath: (id: string, companyName: string) => `/company-info/${companyName}/${id}`
     }
 }

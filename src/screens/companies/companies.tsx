@@ -1,9 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import useGetCompanies from '../company-infos/api/get-companies';
 import { CardCompany } from './card-company';
 import styles from './styles.module.css';
+import { PAINEL_PATHS } from '../../helpers/painel-paths';
 
 export const Companies = () => {
-
+    const navigate = useNavigate();
     const { data: companies } = useGetCompanies();
 
     return (
@@ -15,7 +17,7 @@ export const Companies = () => {
                         <CardCompany 
                         key={company.id} 
                         companyName={company.name} 
-                        onClick={() => null} 
+                        onClick={() => navigate(PAINEL_PATHS.companyInfo.fnPath(company.id, company.name))} 
                         />
                     ))
                 }

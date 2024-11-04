@@ -4,9 +4,11 @@
     position: fixed;
     display: flex;
     align-items: center;
+    gap: 0.5rem;
     padding-left: 1rem;
     height: 3rem;
     top: 0;
+    color: var(--white);
     background-color: var(--black-blue);
     width: 100%;
 
