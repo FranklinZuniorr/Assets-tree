@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import useGetCompanies from '../company-infos/api/get-companies';
+import useGetCompanies from './api/get-companies';
 import { CardCompany } from './card-company';
 import styles from './styles.module.css';
 import { PAINEL_PATHS } from '../../helpers/painel-paths';
