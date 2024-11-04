@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import useGetCompanies from './api/get-companies';
-import { CardCompany } from './card-company';
+import { CardCompany } from './components/card-company';
 import styles from './styles.module.css';
 import { PAINEL_PATHS } from '../../helpers/painel-paths';
 
