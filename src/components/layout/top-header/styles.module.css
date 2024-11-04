@@ -11,6 +11,7 @@
     color: var(--white);
     background-color: var(--black-blue);
     width: 100%;
+    font-size: 0.8rem;
 
     img {
         width: 6.375rem;
