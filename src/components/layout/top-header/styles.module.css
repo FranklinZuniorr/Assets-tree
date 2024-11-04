@@ -1,0 +1,17 @@
+@import '../../../vars.css';
+
+.topHeader {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+    height: 3rem;
+    top: 0;
+    background-color: var(--black-blue);
+    width: 100%;
+
+    img {
+        width: 6.375rem;
+        height: 0.875rem;
+    }
+}

@@ -1,7 +1,13 @@
+@font-face {
+  font-family: 'MAIN_FONT';
+  src: url('./assets/fonts/0bbbfa3e6189931a-s.p.woff2') format('woff2');
+}
+
 body {
   margin: 0;
+  font-family: 'MAIN_FONT';
 }
 
 .app {
-
+  margin: 3.5rem 0.5rem 0.5rem 0.5rem;
 }
