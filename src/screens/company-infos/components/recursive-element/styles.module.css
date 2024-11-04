@@ -1,10 +1,31 @@
 .recursiveElement {
     
+    .recursiveElement_head {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+        
+        img {
+            width: 0.8rem;
+            height: 0.8rem;
+        }
+    }
+
+    .recursiveElement_iconElementType {
+        width: 1.2rem !important;
+        height: 1.2rem !important;
+        transform: rotate(0deg) !important;
+    }
+    
     .recursiveElement_childrens {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
         margin-left: 2rem;
     }
 
-    .recursiveElement_childrens_hide {
+    .recursiveElement_childrens__hide {
         display: none;
     }
 }
