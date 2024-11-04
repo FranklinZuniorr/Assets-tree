@@ -1,7 +1,7 @@
 export const PAINEL_PATHS = {
     companies: {
         name: 'Companies',
-        path: '/companies'
+        path: '/'
     },
     companyInfo: {
         name: 'Company Info',

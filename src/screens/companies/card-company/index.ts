@@ -1,0 +1,1 @@
+export { CardCompany } from './card-company';
