@@ -19,7 +19,7 @@ export const CompanyInfos = () => {
                 element={element} 
                 elements={allElements} 
                 filters={{ 
-                    assetSensorType: undefined, 
+                    assetSensorType: 'energy', 
                     assetStatus: undefined, 
                     elementName: 'CHARCOAL STORAGE SECTOR' 
                 }}/>

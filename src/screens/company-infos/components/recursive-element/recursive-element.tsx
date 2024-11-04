@@ -28,10 +28,25 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
 
         setIsOpen(false);
 
+        const validation1 = ((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) && 
+        (filters.assetStatus && (element as AssetInternal).status === filters.assetStatus) &&
+        (filters.assetSensorType && (element as AssetInternal).sensorType === filters.assetSensorType));
+
+        const validation2 = ((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) && 
+        (filters.assetStatus && (element as AssetInternal).status === filters.assetStatus));
+
+        const validation3 = ((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) && 
+        (filters.assetSensorType && (element as AssetInternal).sensorType === filters.assetSensorType));
+
+        const validation4 = ((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) ||
+        (filters.assetStatus && (element as AssetInternal).status === filters.assetStatus) ||
+        (filters.assetSensorType && (element as AssetInternal).sensorType === filters.assetSensorType));
+
         if(
-            (filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) || 
-            (filters.assetStatus && (element as AssetInternal).status === filters.assetStatus) ||
-            (filters.assetSensorType && (element as AssetInternal).sensorType === filters.assetSensorType)
+            validation1 ||
+            validation2 ||
+            validation3 ||
+            validation4
         ) {
             setIsOpenTree(true);
         }
