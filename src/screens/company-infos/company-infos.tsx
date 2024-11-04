@@ -1,4 +1,3 @@
-
 import { RecursiveElement } from './components/recursive-element';
 import { getFilteredChildrenStart } from './helpers';
 import { useAllElements } from './hooks/useAllElements';
@@ -15,7 +14,15 @@ export const CompanyInfos = () => {
         <br />
         {
             filteredElements.map(element => (
-                <RecursiveElement key={element.id} element={element} elements={allElements} />
+                <RecursiveElement 
+                key={element.id} 
+                element={element} 
+                elements={allElements} 
+                filters={{ 
+                    assetSensorType: undefined, 
+                    assetStatus: undefined, 
+                    elementName: 'CHARCOAL STORAGE SECTOR' 
+                }}/>
             ))
         }
     </div>

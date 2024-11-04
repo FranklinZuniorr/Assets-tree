@@ -1,3 +1,10 @@
 .recursiveElement {
     
+    .recursiveElement_childrens {
+        margin-left: 2rem;
+    }
+
+    .recursiveElement_childrens_hide {
+        display: none;
+    }
 }
