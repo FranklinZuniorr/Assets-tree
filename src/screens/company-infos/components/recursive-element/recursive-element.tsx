@@ -54,7 +54,10 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
             validation4
         ) {
             setIsOpenTree(true);
+            return;
         }
+
+        setIsOpenTree(false);
     }, [filters]);
 
     return <div className={styles.recursiveElement}>

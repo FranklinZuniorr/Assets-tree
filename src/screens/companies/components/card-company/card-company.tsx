@@ -1,5 +1,5 @@
 import styles from './styles.module.css';
-import companyIcon from '../../../assets/images/company.svg';
+import companyIcon from '../../../../assets/images/company.svg';
 
 interface CardCompanyProps {
     companyName: string;
