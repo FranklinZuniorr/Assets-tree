@@ -1,7 +1,7 @@
 import { ENUM_ELEMENT_TYPE } from '../constants';
 import { AssetInternal, LocationInternal } from '../interfaces';
 
-const getFilteredChildren = (
+export const getFilteredChildren = (
   element: LocationInternal | AssetInternal, 
   allElements: (LocationInternal | AssetInternal)[]
 ): (LocationInternal | AssetInternal)[] => {
@@ -51,4 +51,11 @@ const getFilteredChildren = (
   });
 };
 
-export default getFilteredChildren;
+export const getFilteredChildrenStart = (allElements: (LocationInternal | AssetInternal)[]): (LocationInternal | AssetInternal)[] => {
+const filter = allElements.filter(element => 
+  element.elementType === ENUM_ELEMENT_TYPE.LocationRoot || 
+  element.elementType === ENUM_ELEMENT_TYPE.ComponentUnlinked);
+
+  return filter;
+}
+

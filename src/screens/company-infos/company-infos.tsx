@@ -1,21 +1,22 @@
 
-import { ENUM_ELEMENT_TYPE } from './constants';
-import getFilteredChildren from './helpers';
+import { RecursiveElement } from './components/recursive-element';
+import { getFilteredChildrenStart } from './helpers';
 import { useAllElements } from './hooks/useAllElements';
 import styles from './styles.module.css';
 
 export const CompanyInfos = () => {
 
-    const all = useAllElements("662fd0fab3fd5656edb39af5");
-    console.log(all)
+    const allElements = useAllElements("662fd0ee639069143a8fc387");
 
-    const field = {
-        "id": "6a9b47f2cac55c0062464076",
-        "name": "Evaporator",
-        "parentId": null,
-        "elementType": ENUM_ELEMENT_TYPE.LocationRoot
-    }
-    console.warn(getFilteredChildren(field, all));
+    const filteredElements = getFilteredChildrenStart(allElements);
 
-    return <div className={styles.companyInfos}>Company Infos</div>
+    return <div className={styles.companyInfos}>
+        Company Infos
+        <br />
+        {
+            filteredElements.map(element => (
+                <RecursiveElement key={element.id} element={element} elements={allElements} />
+            ))
+        }
+    </div>
 }
