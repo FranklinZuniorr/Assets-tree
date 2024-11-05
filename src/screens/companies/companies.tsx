@@ -3,6 +3,7 @@ import useGetCompanies from './api/get-companies';
 import styles from './styles.module.css';
 import { PAINEL_PATHS } from '../../helpers/painel-paths';
 import { CardCompany } from './components/card-company';
+import icon from '../../assets/images/icon.svg';
 
 export const Companies = () => {
     const navigate = useNavigate();
@@ -10,7 +11,10 @@ export const Companies = () => {
 
     return (
         <div className={styles.companies}>
-            <h2>All available companies</h2>
+            <h2>
+                <img src={icon} alt='icon' />
+                All available companies
+            </h2>
             <div className={styles.companies_content}>
                 <p>Here you find all assets, components and locations of some company</p>
                 <div className={styles.companies_content_renderArea}>
