@@ -28,12 +28,12 @@ export const getFilteredChildren = (
           child.parentId === element.id
         ) || (
           child.elementType === ENUM_ELEMENT_TYPE.ComponentLinkedToAsset &&
-          child.parentId === element.id
+          (child.parentId === element.id)
         );
 
       case ENUM_ELEMENT_TYPE.SubAsset:
         return (
-          child.elementType === ENUM_ELEMENT_TYPE.SubAsset &&
+          child.elementType === ENUM_ELEMENT_TYPE.AssetRoot &&
           child.parentId === element.id
         ) || (
           child.elementType === ENUM_ELEMENT_TYPE.ComponentLinkedToAsset &&

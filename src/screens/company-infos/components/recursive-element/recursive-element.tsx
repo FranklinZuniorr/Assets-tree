@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getFilteredChildren } from '../../helpers';
 import { AssetInternal, LocationInternal } from '../../interfaces';
 import styles from './styles.module.css';
-import { ENUM_ASSET_STATUS } from '../../../../constants';
+import { ENUM_ASSET_SENSOR_TYPE, ENUM_ASSET_STATUS } from '../../../../constants';
 import arrowIcon from '../../../../assets/images/right-arrow-svgrepo-com.svg';
 import assetIcon from '../../../../assets/images/asset.png';
 import componentIcon from '../../../../assets/images/component.png';
@@ -10,7 +10,7 @@ import locationIcon from '../../../../assets/images/location.png';
 import { ENUM_ELEMENT_TYPE } from '../../constants';
 
 interface Filters {
-    assetSensorType?: string;
+    assetSensorType?: ENUM_ASSET_SENSOR_TYPE;
     assetStatus?: ENUM_ASSET_STATUS;
     elementName?: string;
 }
@@ -31,19 +31,22 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
             return;
         }
 
-        setIsOpen(false);
+        if(!filters.assetSensorType && !filters.assetStatus && !filters.elementName) {
+            setIsOpenTree(false);
+            return;
+        }
 
-        const validation1 = ((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) && 
+        const validation1 = !!((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) && 
         (filters.assetStatus && (element as AssetInternal).status === filters.assetStatus) &&
         (filters.assetSensorType && (element as AssetInternal).sensorType === filters.assetSensorType));
 
-        const validation2 = ((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) && 
+        const validation2 = !!((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) && 
         (filters.assetStatus && (element as AssetInternal).status === filters.assetStatus));
 
-        const validation3 = ((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) && 
+        const validation3 = !!((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) && 
         (filters.assetSensorType && (element as AssetInternal).sensorType === filters.assetSensorType));
 
-        const validation4 = ((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) ||
+        const validation4 = !!((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) ||
         (filters.assetStatus && (element as AssetInternal).status === filters.assetStatus) ||
         (filters.assetSensorType && (element as AssetInternal).sensorType === filters.assetSensorType));
 
@@ -54,10 +57,11 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
             validation4
         ) {
             setIsOpenTree(true);
-            return;
         }
 
-        setIsOpenTree(false);
+        return () => {
+            setIsOpenTree(false);
+        }
     }, [filters]);
 
     return <div className={styles.recursiveElement}>

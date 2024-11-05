@@ -4,44 +4,30 @@ import { ENUM_ELEMENT_TYPE } from '../constants';
 import { AssetInternal, LocationInternal } from '../interfaces';
 import useGetLocations from '../api/get-locations';
 import { useGetAssets } from '../api/get-assets';
-
-const isValidLocation = (element: LocationExternal): element is LocationExternal => {
-    return element && typeof element.id === 'string' && typeof element.name === 'string' && 
-           (element.parentId === null || typeof element.parentId === 'string');
-};
-
-const isValidAsset = (element: AssetExternal): element is AssetExternal => {
-    return element && typeof element.id === 'string' && typeof element.name === 'string' &&
-           (element.parentId === null || typeof element.parentId === 'string') &&
-           (element.locationId === null || typeof element.locationId === 'string') &&
-           (element.sensorId === null || typeof element.sensorId === 'string') &&
-           (element.sensorType === undefined || typeof element.sensorType === 'string') &&
-           (element.status === undefined || typeof element.status === 'string') &&
-           (element.gatewayId === undefined || typeof element.gatewayId === 'string');
-};
+import { ENUM_ASSET_SENSOR_TYPE, ENUM_ASSET_STATUS } from '../../../constants';
 
 const determineElementType = (element: LocationExternal | AssetExternal): ENUM_ELEMENT_TYPE => {
-    if ('sensorType' in element) {
+    if ('name' in element && 'id' in element && 'locationId' in element) {
         const asset = element as AssetExternal;
 
-        if (!asset.parentId && !asset.locationId) {
-            return ENUM_ELEMENT_TYPE.ComponentUnlinked;
+        if(asset.sensorType && !asset.sensorId || !asset.parentId) {
+            return ENUM_ELEMENT_TYPE.ComponentUnlinked
         }
 
-        if (asset.parentId && asset.sensorType) {
-            return ENUM_ELEMENT_TYPE.ComponentLinkedToAsset;
+        if(asset.locationId && !asset.sensorId) {
+            return ENUM_ELEMENT_TYPE.AssetRoot
         }
 
-        if (asset.locationId && asset.sensorType) {
-            return ENUM_ELEMENT_TYPE.ComponentLinkedToLocation;
+        if(asset.parentId && !asset.sensorId) {
+            return ENUM_ELEMENT_TYPE.SubAsset
         }
 
-        if (asset.parentId && !asset.sensorType) {
-            return ENUM_ELEMENT_TYPE.SubAsset;
+        if(asset.sensorType && asset.locationId) {
+            return ENUM_ELEMENT_TYPE.ComponentLinkedToLocation
         }
 
-        if (asset.locationId && !asset.sensorType) {
-            return ENUM_ELEMENT_TYPE.AssetRoot;
+        if(asset.sensorType && asset.parentId) {
+            return ENUM_ELEMENT_TYPE.ComponentLinkedToAsset
         }
     } else {
         const location = element as LocationExternal;
@@ -56,27 +42,35 @@ const determineElementType = (element: LocationExternal | AssetExternal): ENUM_E
     throw new Error('Elemento inválido ou não identificado');
 };
 
-export const useAllElements = (companyId: string): (LocationInternal | AssetInternal)[] => {
+export const useAllElements = (companyId: string, sensorType?: ENUM_ASSET_SENSOR_TYPE, status?: ENUM_ASSET_STATUS): (LocationInternal | AssetInternal)[] => {
     const { data: locations } = useGetLocations(companyId);
     const { data: assets } = useGetAssets(companyId);
 
     return useMemo(() => {
         if (locations && assets) {
             const transformedLocations: LocationInternal[] = locations
-                .filter(isValidLocation)
                 .map((location) => ({
                     ...location,
                     elementType: determineElementType(location)
                 }));
 
-            const transformedAssets: AssetInternal[] = assets
-                .filter(isValidAsset)
+            let transformedAssets: AssetInternal[] = assets
                 .map((asset) => ({
                     ...asset,
                     elementType: determineElementType(asset)
                 }));
 
-            return [...transformedLocations, ...transformedAssets];
+            if(status) {
+                transformedAssets = transformedAssets.filter(asset => (asset as AssetInternal).status === status);
+            }
+
+            if (sensorType) {
+                transformedAssets = transformedAssets.filter(asset => (asset as AssetInternal).sensorType === sensorType);
+            }
+
+            const allElements = [...transformedLocations, ...transformedAssets];
+
+            return allElements;
         }
 
         return [];
