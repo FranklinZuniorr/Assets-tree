@@ -4,7 +4,6 @@ import { ENUM_ELEMENT_TYPE } from '../constants';
 import { AssetInternal, LocationInternal } from '../interfaces';
 import useGetLocations from '../api/get-locations';
 import { useGetAssets } from '../api/get-assets';
-import { ENUM_ASSET_SENSOR_TYPE, ENUM_ASSET_STATUS } from '../../../constants';
 
 const determineElementType = (element: LocationExternal | AssetExternal): ENUM_ELEMENT_TYPE => {
     if ('locationId' in element) {
@@ -43,7 +42,7 @@ const determineElementType = (element: LocationExternal | AssetExternal): ENUM_E
 };
 
 
-export const useAllElements = (companyId: string, sensorType?: ENUM_ASSET_SENSOR_TYPE, status?: ENUM_ASSET_STATUS): (LocationInternal | AssetInternal)[] => {
+export const useAllElements = (companyId: string): (LocationInternal | AssetInternal)[] => {
     const { data: locations } = useGetLocations(companyId);
     const { data: assets } = useGetAssets(companyId);
 
@@ -55,19 +54,11 @@ export const useAllElements = (companyId: string, sensorType?: ENUM_ASSET_SENSOR
                     elementType: determineElementType(location)
                 }));
 
-            let transformedAssets: AssetInternal[] = assets
+            const transformedAssets: AssetInternal[] = assets
                 .map((asset) => ({
                     ...asset,
                     elementType: determineElementType(asset)
                 }));
-
-            if(status) {
-                transformedAssets = transformedAssets.filter(asset => (asset as AssetInternal).status === status);
-            }
-
-            if (sensorType) {
-                transformedAssets = transformedAssets.filter(asset => (asset as AssetInternal).sensorType === sensorType);
-            }
 
             const allElements = [...transformedLocations, ...transformedAssets];
 
@@ -75,5 +66,5 @@ export const useAllElements = (companyId: string, sensorType?: ENUM_ASSET_SENSOR
         }
 
         return [];
-    }, [locations, assets, sensorType, status]);
+    }, [locations, assets]);
 };

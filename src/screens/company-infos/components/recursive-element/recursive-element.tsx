@@ -31,6 +31,7 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
     const isComponent = element.elementType === ENUM_ELEMENT_TYPE.ComponentLinkedToAsset || 
     element.elementType === ENUM_ELEMENT_TYPE.ComponentLinkedToLocation ||
     element.elementType === ENUM_ELEMENT_TYPE.ComponentUnlinked; 
+    const [isTouched, setIsTouched] = useState<boolean>(false);
 
     useEffect(() => {
         if(!setIsOpenTree) {
@@ -63,6 +64,7 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
             validation4
         ) {
             setIsOpenTree(true);
+            setIsTouched(false);
         }
 
         return () => {
@@ -70,10 +72,23 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
         }
     }, [filters]);
 
+    useEffect(() => {
+        if(!setIsOpenTree) {
+            return;
+        }
+        if(isTouched) {
+            return
+        }
+        setIsOpenTree(open);
+    }, [open])
+
     return <div className={styles.recursiveElement}>
         <div 
         className={styles.recursiveElement_head} 
-        onClick={() => setIsOpen(!open)}
+        onClick={() => {
+            setIsOpen(!open);
+            setIsTouched(true);
+        }}
         style={{
             cursor: allFilteredElements.length ? 'pointer' : 'default'
         }}

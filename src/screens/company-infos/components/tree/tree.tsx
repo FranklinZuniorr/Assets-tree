@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react';
+import { useReducer } from 'react';
 import { getFilteredChildrenStart } from '../../helpers';
 import { useAllElements } from '../../hooks/useAllElements';
 import { RecursiveElement } from '../recursive-element';
@@ -11,28 +11,26 @@ interface TreeProps {
 }
 
 export const Tree = ({ id }: TreeProps) => {
-    const [filterSensorType, setFilterSensorType] = useState<ENUM_ASSET_SENSOR_TYPE | undefined>(undefined);
-    const [filterStatus, setFilterStatus] = useState<ENUM_ASSET_STATUS | undefined>(undefined);
-    const allElements = useAllElements(id, filterSensorType, filterStatus);
+    const allElements = useAllElements(id);
     const filteredElements = getFilteredChildrenStart(allElements);
     const [state, dispatch] = useReducer(assetReducer, initialState);
 
     const handleFilterSensorType = () => {
-        if (!filterSensorType) {
-            setFilterSensorType(ENUM_ASSET_SENSOR_TYPE.ENERGY);
+        if (!state.assetSensorType) {
+            dispatch({type: 'SET_ASSET_SENSOR_TYPE', payload: ENUM_ASSET_SENSOR_TYPE.ENERGY});
             return;
         }
 
-        setFilterSensorType(undefined);
+        dispatch({type: 'SET_ASSET_SENSOR_TYPE', payload: ''});
     };
 
     const handleFilterStatus = () => {
-        if (!filterStatus) {
-            setFilterStatus(ENUM_ASSET_STATUS.ALERT);
+        if (!state.assetStatus) {
+            dispatch({type: 'SET_ASSET_STATUS', payload: ENUM_ASSET_STATUS.ALERT});
             return;
         }
 
-        setFilterStatus(undefined);
+        dispatch({type: 'SET_ASSET_STATUS', payload: ''});
     };
 
     return (
@@ -47,13 +45,13 @@ export const Tree = ({ id }: TreeProps) => {
                 />
                 <div className={styles.tree_filters_btns}>
                     <button 
-                    className={`${styles.tree_filters_btns_btn} ${filterSensorType ? styles.tree_filters_btns_btn__selected : ''}`}
+                    className={`${styles.tree_filters_btns_btn} ${state.assetSensorType ? styles.tree_filters_btns_btn__selected : ''}`}
                     onClick={handleFilterSensorType}
                     >
                         Sensor de energia
                     </button>
                     <button 
-                    className={`${styles.tree_filters_btns_btn} ${filterStatus ? styles.tree_filters_btns_btn__selected : ''}`}
+                    className={`${styles.tree_filters_btns_btn} ${state.assetStatus ? styles.tree_filters_btns_btn__selected : ''}`}
                     onClick={handleFilterStatus}
                     >
                         Crítico
@@ -68,8 +66,8 @@ export const Tree = ({ id }: TreeProps) => {
                         element={element} 
                         elements={allElements} 
                         filters={{ 
-                            assetSensorType: undefined, 
-                            assetStatus: undefined, 
+                            assetSensorType: state.assetSensorType as ENUM_ASSET_SENSOR_TYPE, 
+                            assetStatus: state.assetStatus as ENUM_ASSET_STATUS, 
                             elementName: state.elementName
                         }}/>
                     ))
