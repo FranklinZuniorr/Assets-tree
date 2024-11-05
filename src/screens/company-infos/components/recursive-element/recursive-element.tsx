@@ -34,8 +34,7 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
     element.elementType === ENUM_ELEMENT_TYPE.ComponentLinkedToLocation ||
     element.elementType === ENUM_ELEMENT_TYPE.ComponentUnlinked;
     const isFiltering = filters.assetSensorType || filters.assetStatus || filters.elementName;
-    const isVisible = isFiltering ? open ? true : false : true; 
-    const [/* _ */, setIsTouched] = useState<boolean>(false);
+    const isVisible = isFiltering ? open ? true : false : true;
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
     const handleSetIsOpenTree = (value: boolean) => {
@@ -43,12 +42,6 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
             setIsOpenTree(value);
         }
     }
-
-    /* const handleReset = () => {
-        setIsOpen(false);
-        handleSetIsOpenTree(false);
-        setIsTouched(false);
-    } */
 
     useEffect(() => {
         const validation1 = !!((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) && 
@@ -71,7 +64,6 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
             validation3 ||
             validation4
         ) {
-            setIsTouched(false);
             handleSetIsOpenTree(true);
             setIsOpen(true);
             return
@@ -101,7 +93,6 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
                 return
             }
             setIsOpen(!open);
-            setIsTouched(true);
         }}
         style={{
             cursor: allFilteredElements.length ? 'pointer' : 'default',
