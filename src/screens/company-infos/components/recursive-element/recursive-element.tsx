@@ -27,7 +27,7 @@ interface RecursiveElementProps {
 
 export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: RecursiveElementProps) => {
     const [open, setIsOpen] = useState<boolean>(false);
-    const allElements = getFilteredChildren(element, elements);
+    const allFilteredElements = getFilteredChildren(element, elements);
     const isComponent = element.elementType === ENUM_ELEMENT_TYPE.ComponentLinkedToAsset || 
     element.elementType === ENUM_ELEMENT_TYPE.ComponentLinkedToLocation ||
     element.elementType === ENUM_ELEMENT_TYPE.ComponentUnlinked; 
@@ -75,7 +75,7 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
         className={styles.recursiveElement_head} 
         onClick={() => setIsOpen(!open)}
         style={{
-            cursor: allElements.length ? 'pointer' : 'default'
+            cursor: allFilteredElements.length ? 'pointer' : 'default'
         }}
         >
             {
@@ -108,7 +108,7 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
             }
             <span>{element.name}</span>
             {
-                allElements.length > 0 && 
+                allFilteredElements.length > 0 && 
                 <img 
                 src={arrowIcon} 
                 alt='arrow' 
@@ -149,11 +149,11 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
         `}
         >
                 {
-                    allElements.map(element => (
+                    allFilteredElements.map(element => (
                         <RecursiveElement 
                         key={element.id} 
                         element={element} 
-                        elements={allElements} 
+                        elements={elements} 
                         setIsOpenTree={setIsOpen} 
                         filters={filters}
                         />

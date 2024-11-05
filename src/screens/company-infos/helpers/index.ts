@@ -9,11 +9,8 @@ export const getFilteredChildren = (
     switch (element.elementType) {
       case ENUM_ELEMENT_TYPE.LocationRoot:
         return (
-          child.elementType === ENUM_ELEMENT_TYPE.SubLocation &&
-          child.parentId === element.id
-        ) || (
-          child.elementType === ENUM_ELEMENT_TYPE.AssetRoot &&
-          (child as AssetInternal).locationId === element.id
+          (child.elementType === ENUM_ELEMENT_TYPE.SubLocation && child.parentId === element.id) ||
+          (child.elementType === ENUM_ELEMENT_TYPE.AssetRoot && (child as AssetInternal).locationId === element.id)
         );
 
       case ENUM_ELEMENT_TYPE.SubLocation:
@@ -24,18 +21,12 @@ export const getFilteredChildren = (
 
       case ENUM_ELEMENT_TYPE.AssetRoot:
         return (
-          child.elementType === ENUM_ELEMENT_TYPE.SubAsset &&
-          child.parentId === element.id
-        ) || (
-          child.elementType === ENUM_ELEMENT_TYPE.ComponentLinkedToAsset &&
-          (child.parentId === element.id)
+          (child.elementType === ENUM_ELEMENT_TYPE.SubAsset && child.parentId === element.id) ||
+          (child.elementType === ENUM_ELEMENT_TYPE.ComponentLinkedToAsset && child.parentId === element.id)
         );
 
       case ENUM_ELEMENT_TYPE.SubAsset:
         return (
-          child.elementType === ENUM_ELEMENT_TYPE.AssetRoot &&
-          child.parentId === element.id
-        ) || (
           child.elementType === ENUM_ELEMENT_TYPE.ComponentLinkedToAsset &&
           child.parentId === element.id
         );

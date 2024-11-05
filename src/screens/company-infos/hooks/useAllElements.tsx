@@ -7,27 +7,27 @@ import { useGetAssets } from '../api/get-assets';
 import { ENUM_ASSET_SENSOR_TYPE, ENUM_ASSET_STATUS } from '../../../constants';
 
 const determineElementType = (element: LocationExternal | AssetExternal): ENUM_ELEMENT_TYPE => {
-    if ('name' in element && 'id' in element && 'locationId' in element) {
+    if ('locationId' in element) {
         const asset = element as AssetExternal;
 
-        if(asset.sensorType && !asset.sensorId || !asset.parentId) {
-            return ENUM_ELEMENT_TYPE.ComponentUnlinked
+        if (!asset.locationId && !asset.parentId) {
+            return ENUM_ELEMENT_TYPE.ComponentUnlinked;
         }
 
-        if(asset.locationId && !asset.sensorId) {
-            return ENUM_ELEMENT_TYPE.AssetRoot
+        if (asset.locationId && !asset.parentId && !asset.sensorType) {
+            return ENUM_ELEMENT_TYPE.AssetRoot;
         }
 
-        if(asset.parentId && !asset.sensorId) {
-            return ENUM_ELEMENT_TYPE.SubAsset
+        if (asset.parentId && !asset.locationId && !asset.sensorType) {
+            return ENUM_ELEMENT_TYPE.SubAsset;
         }
 
-        if(asset.sensorType && asset.locationId) {
-            return ENUM_ELEMENT_TYPE.ComponentLinkedToLocation
+        if (asset.locationId && asset.sensorType) {
+            return ENUM_ELEMENT_TYPE.ComponentLinkedToAsset;
         }
 
-        if(asset.sensorType && asset.parentId) {
-            return ENUM_ELEMENT_TYPE.ComponentLinkedToAsset
+        if (asset.parentId && asset.sensorType) {
+            return ENUM_ELEMENT_TYPE.ComponentLinkedToAsset;
         }
     } else {
         const location = element as LocationExternal;
@@ -39,8 +39,9 @@ const determineElementType = (element: LocationExternal | AssetExternal): ENUM_E
         return ENUM_ELEMENT_TYPE.LocationRoot;
     }
 
-    throw new Error('Elemento inválido ou não identificado');
+    throw new Error("");
 };
+
 
 export const useAllElements = (companyId: string, sensorType?: ENUM_ASSET_SENSOR_TYPE, status?: ENUM_ASSET_STATUS): (LocationInternal | AssetInternal)[] => {
     const { data: locations } = useGetLocations(companyId);
@@ -74,5 +75,5 @@ export const useAllElements = (companyId: string, sensorType?: ENUM_ASSET_SENSOR
         }
 
         return [];
-    }, [locations, assets]);
+    }, [locations, assets, sensorType, status]);
 };
