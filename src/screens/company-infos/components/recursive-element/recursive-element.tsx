@@ -8,6 +8,9 @@ import assetIcon from '../../../../assets/images/asset.png';
 import componentIcon from '../../../../assets/images/component.png';
 import locationIcon from '../../../../assets/images/location.png';
 import { ENUM_ELEMENT_TYPE } from '../../constants';
+import alertIcon from '../../../../assets/images/alert.svg';
+import operatingIcon from '../../../../assets/images/operating.svg';
+import energyIcon from '../../../../assets/images/energy.svg';
 
 interface Filters {
     assetSensorType?: ENUM_ASSET_SENSOR_TYPE;
@@ -25,6 +28,9 @@ interface RecursiveElementProps {
 export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: RecursiveElementProps) => {
     const [open, setIsOpen] = useState<boolean>(false);
     const allElements = getFilteredChildren(element, elements);
+    const isComponent = element.elementType === ENUM_ELEMENT_TYPE.ComponentLinkedToAsset || 
+    element.elementType === ENUM_ELEMENT_TYPE.ComponentLinkedToLocation ||
+    element.elementType === ENUM_ELEMENT_TYPE.ComponentUnlinked; 
 
     useEffect(() => {
         if(!setIsOpenTree) {
@@ -78,10 +84,7 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
                 <img 
                 className={styles.recursiveElement_iconElementType}  
                 src={assetIcon} 
-                alt='arrow' 
-                style={{ 
-                    transform: open ? 'rotate(90deg)' : 'rotate(0deg)',
-                }} 
+                alt='asset' 
                 />
             }
             {
@@ -90,10 +93,7 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
                 <img 
                 className={styles.recursiveElement_iconElementType} 
                 src={locationIcon} 
-                alt='arrow' 
-                style={{ 
-                    transform: open ? 'rotate(90deg)' : 'rotate(0deg)',
-                }} 
+                alt='location' 
                 />
             }
             {
@@ -103,10 +103,7 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
                 <img 
                 className={styles.recursiveElement_iconElementType} 
                 src={componentIcon} 
-                alt='arrow' 
-                style={{ 
-                    transform: open ? 'rotate(90deg)' : 'rotate(0deg)',
-                }} 
+                alt='component' 
                 />
             }
             <span>{element.name}</span>
@@ -118,6 +115,30 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
                 style={{ 
                     transform: open ? 'rotate(90deg)' : 'rotate(0deg)',
                 }} 
+                />
+            }
+            {
+                isComponent && (element as AssetInternal).status === ENUM_ASSET_STATUS.ALERT &&
+                <img 
+                className={styles.recursiveElement_iconFeedback} 
+                src={alertIcon} 
+                alt='alert'
+                />
+            }
+            {
+                isComponent && (element as AssetInternal).status === ENUM_ASSET_STATUS.OPERATING &&
+                <img 
+                className={styles.recursiveElement_iconFeedback} 
+                src={operatingIcon} 
+                alt='alert'
+                />
+            }
+            {
+                isComponent && (element as AssetInternal).sensorType === ENUM_ASSET_SENSOR_TYPE.ENERGY &&
+                <img 
+                className={styles.recursiveElement_iconFeedback} 
+                src={energyIcon} 
+                alt='alert'
                 />
             }
         </div>

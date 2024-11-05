@@ -11,7 +11,7 @@ interface TreeProps {
 }
 
 export const Tree = ({ id }: TreeProps) => {
-    const allElements = useAllElements(id, ENUM_ASSET_SENSOR_TYPE.VIBRATION, undefined);
+    const allElements = useAllElements(id, ENUM_ASSET_SENSOR_TYPE.ENERGY, undefined);
     const filteredElements = getFilteredChildrenStart(allElements);
     const [state, dispatch] = useReducer(assetReducer, initialState);
     return (
