@@ -10,6 +10,7 @@ import alertCircle from '../../../../assets/images/alert-circle.svg';
 import energyIconWhite from '../../../../assets/images/thunderbolt-white.svg';
 import alertCircleWhite from '../../../../assets/images/alert-circle-white.svg';
 import { Loading } from '../../../../components/loading';
+import { debounce } from '../../../../utils';
 
 interface TreeProps {
     id: string;
@@ -50,7 +51,10 @@ export const Tree = ({ id }: TreeProps) => {
                 type='text' 
                 placeholder='Search asset/component/location' 
                 value={state.elementName}
-                onChange={({ target: { value }}) => dispatch({ type: 'SET_ELEMENT_NAME', payload: value })}
+                onChange={({ target: { value }}) => {
+                    dispatch({ type: 'SET_ELEMENT_NAME', payload: value });
+                    debounce(() => refetch(), 500);
+                }}
                 />
                 <div className={styles.tree_filters_btns}>
                     <button 
