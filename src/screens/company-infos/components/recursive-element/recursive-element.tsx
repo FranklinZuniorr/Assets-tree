@@ -45,6 +45,7 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
     }
 
     useEffect(() => {
+        setIsOpen(false);
         if(!filters.assetSensorType && !filters.assetStatus && !filters.elementName) {
             handleSetIsOpenTree(false);
             setIsOpen(false);
