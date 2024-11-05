@@ -11,6 +11,7 @@ import { ENUM_ELEMENT_TYPE } from '../../constants';
 import alertIcon from '../../../../assets/images/alert.svg';
 import operatingIcon from '../../../../assets/images/operating.svg';
 import energyIcon from '../../../../assets/images/energy.svg';
+import { Modal } from '../../../../components/modal';
 
 interface Filters {
     assetSensorType?: ENUM_ASSET_SENSOR_TYPE;
@@ -34,6 +35,7 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
     const isFiltering = filters.assetSensorType || filters.assetStatus || filters.elementName;
     const isVisible = isFiltering ? open ? true : false : true; 
     const [isTouched, setIsTouched] = useState<boolean>(false);
+    const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
     const handleSetIsOpenTree = (value: boolean) => {
         if (setIsOpenTree) {
@@ -94,6 +96,9 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
         <div 
         className={`${styles.recursiveElement_head} ${isComponent ? styles.recursiveElement_head_component : ''}`} 
         onClick={() => {
+            if (isComponent) {
+                setIsOpenModal(true);
+            }
             if (isFiltering) {
                 return
             }
@@ -186,5 +191,7 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
                     ))
                 }
         </div>
+
+        <Modal open={isOpenModal} onClose={() => setIsOpenModal(false)} ><div>sdfsdfsd</div></Modal>
     </div>
 }
