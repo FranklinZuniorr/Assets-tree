@@ -15,7 +15,10 @@ export const Modal = ({ className, children, open = true, onClose }: ModalProps)
 
         if(totalOpenModals.length > 0) {
             document.body.style.overflow = 'hidden';
+            return;
         }
+
+        document.body.style.overflow = 'auto';
     }
 
     const handleCloseModal = (event: MouseEvent<HTMLDivElement>) => {
@@ -30,7 +33,7 @@ export const Modal = ({ className, children, open = true, onClose }: ModalProps)
     useEffect(() => {
         handleBodyOverflow();
         return () => handleBodyOverflow();
-    }, [])
+    }, [open])
 
     return (
         <>
