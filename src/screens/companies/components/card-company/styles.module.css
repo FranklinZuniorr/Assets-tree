@@ -4,7 +4,7 @@
     padding: 0.5rem;
     width: fit-content;
     gap: 0.5rem;
-    border: 1px solid var(--black-blue);
+    border: 1px solid var(--gray-200);
     background-color: var(--white);
     border-radius: 0.3rem;
     font-size: 0.875rem;
