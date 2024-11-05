@@ -10,9 +10,5 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
-    .modal_content {
-        max-height: 90%;
-        margin: 0.5rem;
-    }
+    cursor: pointer;
 }

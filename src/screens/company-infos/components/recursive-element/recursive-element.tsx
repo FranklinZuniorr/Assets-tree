@@ -12,6 +12,7 @@ import alertIcon from '../../../../assets/images/alert.svg';
 import operatingIcon from '../../../../assets/images/operating.svg';
 import energyIcon from '../../../../assets/images/energy.svg';
 import { Modal } from '../../../../components/modal';
+import { ContentModalRecursiveElement } from '../content-modal-recursive-element';
 
 interface Filters {
     assetSensorType?: ENUM_ASSET_SENSOR_TYPE;
@@ -192,6 +193,11 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
                 }
         </div>
 
-        <Modal open={isOpenModal} onClose={() => setIsOpenModal(false)} ><div>sdfsdfsd</div></Modal>
+        <Modal open={isOpenModal} onClose={() => setIsOpenModal(false)}>
+            <ContentModalRecursiveElement 
+            data={element as AssetInternal} 
+            onClickBtnClose={() => setIsOpenModal(false)}
+            />
+        </Modal>
     </div>
 }

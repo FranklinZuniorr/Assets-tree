@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import styles from './styles.module.css';
 
 interface ModalProps {
@@ -21,8 +21,7 @@ export const Modal = ({ className, children, open = true, onClose }: ModalProps)
         document.body.style.overflow = 'auto';
     }
 
-    const handleCloseModal = (event: MouseEvent<HTMLDivElement>) => {
-        event.stopPropagation();
+    const handleCloseModal = () => {
         if(!onClose) {
             return;
         } 
@@ -43,7 +42,7 @@ export const Modal = ({ className, children, open = true, onClose }: ModalProps)
                 className={`${styles.modal} ${className ?? ''}`}
                 onClick={handleCloseModal}
                 >
-                    <div className={styles.modal_content}>{children}</div>
+                    {children}
                 </div>
             }
         </>
