@@ -27,6 +27,7 @@
             max-width: 25rem;
             border: 1px solid var(--gray);
             outline: none;
+            padding: 0;
             padding-left: 2rem;
             padding-right: 0.5rem;
             background-image: url(../../../../assets/images/search.svg);

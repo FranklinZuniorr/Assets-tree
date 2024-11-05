@@ -84,13 +84,13 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
 
     return <div className={styles.recursiveElement}>
         <div 
-        className={styles.recursiveElement_head} 
+        className={`${styles.recursiveElement_head} ${isComponent ? styles.recursiveElement_head_component : ''}`} 
         onClick={() => {
             setIsOpen(!open);
             setIsTouched(true);
         }}
         style={{
-            cursor: allFilteredElements.length ? 'pointer' : 'default'
+            cursor: allFilteredElements.length ? 'pointer' : 'default',
         }}
         >
             {

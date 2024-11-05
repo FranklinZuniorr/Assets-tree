@@ -5,13 +5,27 @@
         align-items: center;
         gap: 0.5rem;
         margin-bottom: 0.5rem;
+        padding-left: 0.25rem;
+        font-size: 0.875rem;
         
         img {
             width: 0.8rem;
             height: 0.8rem;
         }
-    }
 
+    }
+    
+    .recursiveElement_head_component {
+        cursor: pointer !important;
+        &:hover {
+            background-color: var(--white-blue);
+            color: var(--white);
+            img:nth-child(1) {
+                filter: brightness(0) saturate(100%) invert(93%) sepia(93%) saturate(0%) hue-rotate(270deg) brightness(105%) contrast(108%);
+            }
+        }
+    }
+    
     .recursiveElement_iconElementType {
         width: 1.2rem !important;
         height: 1.2rem !important;
