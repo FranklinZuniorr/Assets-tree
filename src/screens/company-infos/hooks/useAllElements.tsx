@@ -42,9 +42,10 @@ const determineElementType = (element: LocationExternal | AssetExternal): ENUM_E
 };
 
 
-export const useAllElements = (companyId: string): {array: (LocationInternal | AssetInternal)[], isLoading: boolean}  => {
-    const { data: locations, isFetching: isFetchingLocation } = useGetLocations(companyId);
-    const { data: assets, isFetching: isFetchingAssets } = useGetAssets(companyId);
+export const useAllElements = (companyId: string): 
+{array: (LocationInternal | AssetInternal)[], isLoading: boolean, refetch: () => void}  => {
+    const { data: locations, isFetching: isFetchingLocation, refetch: refetchLocations } = useGetLocations(companyId);
+    const { data: assets, isFetching: isFetchingAssets, refetch: refetchAssets } = useGetAssets(companyId);
 
     return {
         array: useMemo(() => {
@@ -68,6 +69,10 @@ export const useAllElements = (companyId: string): {array: (LocationInternal | A
     
             return [];
         }, [locations, assets]),
-        isLoading: isFetchingAssets || isFetchingLocation
+        isLoading: isFetchingAssets || isFetchingLocation,
+        refetch: () => {
+            refetchAssets();
+            refetchLocations();
+        }
     };
 };

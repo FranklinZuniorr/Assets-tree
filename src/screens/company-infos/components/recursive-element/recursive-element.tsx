@@ -35,7 +35,7 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
     element.elementType === ENUM_ELEMENT_TYPE.ComponentUnlinked;
     const isFiltering = filters.assetSensorType || filters.assetStatus || filters.elementName;
     const isVisible = isFiltering ? open ? true : false : true; 
-    const [isTouched, setIsTouched] = useState<boolean>(false);
+    const [/* _ */, setIsTouched] = useState<boolean>(false);
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
     const handleSetIsOpenTree = (value: boolean) => {
@@ -44,14 +44,13 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
         }
     }
 
-    useEffect(() => {
+    /* const handleReset = () => {
         setIsOpen(false);
-        if(!filters.assetSensorType && !filters.assetStatus && !filters.elementName) {
-            handleSetIsOpenTree(false);
-            setIsOpen(false);
-            return;
-        }
+        handleSetIsOpenTree(false);
+        setIsTouched(false);
+    } */
 
+    useEffect(() => {
         const validation1 = !!((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) && 
         (filters.assetStatus && (element as AssetInternal).status === filters.assetStatus) &&
         (filters.assetSensorType && (element as AssetInternal).sensorType === filters.assetSensorType));
@@ -72,27 +71,24 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
             validation3 ||
             validation4
         ) {
+            setIsTouched(false);
             handleSetIsOpenTree(true);
             setIsOpen(true);
-            setIsTouched(false);
+            return
         }
 
-        return () => {
+        if(open){
             setIsOpen(false);
-            if(filters.assetSensorType?.length === 0 && filters.assetStatus?.length === 0 && filters.elementName?.length === 0) {
-                handleSetIsOpenTree(false);
-                setIsOpen(false);
-            }
         }
     }, [filters]);
 
     useEffect(() => {
-        if(isTouched) {
+        if(!open) {
             return
         }
         handleSetIsOpenTree(open)
         setIsOpen(open);
-    }, [open])
+    }, [open]);
 
     return <div className={styles.recursiveElement} style={{ display: isVisible ? 'block' : 'none' }}>
         <div 

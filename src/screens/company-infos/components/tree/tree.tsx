@@ -16,26 +16,30 @@ interface TreeProps {
 }
 
 export const Tree = ({ id }: TreeProps) => {
-    const { array: allElements, isLoading } = useAllElements(id);
+    const { array: allElements, isLoading, refetch } = useAllElements(id);
     const filteredElements = getFilteredChildrenStart(allElements);
     const [state, dispatch] = useReducer(assetReducer, initialState);
 
     const handleFilterSensorType = () => {
         if (!state.assetSensorType) {
             dispatch({type: 'SET_ASSET_SENSOR_TYPE', payload: ENUM_ASSET_SENSOR_TYPE.ENERGY});
+            refetch();
             return;
         }
-
+        
         dispatch({type: 'SET_ASSET_SENSOR_TYPE', payload: ''});
+        refetch();
     };
 
     const handleFilterStatus = () => {
         if (!state.assetStatus) {
             dispatch({type: 'SET_ASSET_STATUS', payload: ENUM_ASSET_STATUS.ALERT});
+            refetch();
             return;
         }
 
         dispatch({type: 'SET_ASSET_STATUS', payload: ''});
+        refetch();
     };
 
     return (
@@ -81,7 +85,7 @@ export const Tree = ({ id }: TreeProps) => {
                         filteredElements.map(element => (
                             <RecursiveElement 
                             key={element.id} 
-                            element={element} 
+                            element={element}
                             elements={allElements} 
                             filters={{ 
                                 assetSensorType: state.assetSensorType as ENUM_ASSET_SENSOR_TYPE, 
