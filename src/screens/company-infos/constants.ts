@@ -5,5 +5,6 @@ export enum ENUM_ELEMENT_TYPE {
     SubAsset = 'SUB_ASSET',                     
     ComponentUnlinked = 'COMPONENT_UNLINKED',   
     ComponentLinkedToAsset = 'COMPONENT_LINKED_TO_ASSET', 
-    ComponentLinkedToLocation = 'COMPONENT_LINKED_TO_LOCATION' 
+    ComponentLinkedToLocation = 'COMPONENT_LINKED_TO_LOCATION',
+    none = 'NONE',
 }

@@ -9,7 +9,7 @@ const determineElementType = (element: LocationExternal | AssetExternal): ENUM_E
     if ('locationId' in element) {
         const asset = element as AssetExternal;
 
-        if (!asset.locationId && !asset.parentId) {
+        if (!asset.locationId && !asset.parentId && asset.sensorType) {
             return ENUM_ELEMENT_TYPE.ComponentUnlinked;
         }
 
@@ -38,7 +38,7 @@ const determineElementType = (element: LocationExternal | AssetExternal): ENUM_E
         return ENUM_ELEMENT_TYPE.LocationRoot;
     }
 
-    throw new Error("");
+    return ENUM_ELEMENT_TYPE.none;
 };
 
 
