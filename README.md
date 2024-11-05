@@ -2,7 +2,7 @@
 
 A React-based platform for efficiently managing and visualizing industrial assets, developed with a focus on performance, data organization, and intuitive filtering.
 
-....
+[Screencast from 2024-11-05 17-06-39.webm](https://github.com/user-attachments/assets/65556beb-dd10-4cce-b4ac-36d727e5a6ee)
 
 ## Key Features
 
