@@ -10,6 +10,7 @@
     max-height: 90%;
     margin: 0.5rem;
     overflow-y: auto;
+    animation: entrance 2s ease 0s 1 normal forwards;
 
     .contentModalRecursiveElement_infos {
         display: flex;
@@ -17,8 +18,22 @@
         gap: 0.5rem;
 
         h1 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin: 0;
             font-size: 1.5rem;
+
+            span {
+                display: flex;
+                gap: 0.3rem;
+
+                img {
+                    width: 0.7rem !important;
+                    height: 0.7rem !important;
+                }
+            }
+
         }
 
         h3 {
@@ -53,4 +68,16 @@
         border-radius: 0.3125rem;
     }
 
+}
+
+@keyframes entrance {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

@@ -32,7 +32,7 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
     const allFilteredElements = getFilteredChildren(element, elements);
     const isComponent = element.elementType === ENUM_ELEMENT_TYPE.ComponentLinkedToAsset || 
     element.elementType === ENUM_ELEMENT_TYPE.ComponentLinkedToLocation ||
-    element.elementType === ENUM_ELEMENT_TYPE.ComponentUnlinked
+    element.elementType === ENUM_ELEMENT_TYPE.ComponentUnlinked;
     const isFiltering = filters.assetSensorType || filters.assetStatus || filters.elementName;
     const isVisible = isFiltering ? open ? true : false : true; 
     const [isTouched, setIsTouched] = useState<boolean>(false);
