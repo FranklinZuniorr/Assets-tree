@@ -4,7 +4,7 @@ import styles from './styles.module.css';
 import { PAINEL_PATHS } from '../../helpers/painel-paths';
 import { Tree } from './components/tree';
 
-export const CompanyInfos = () => {
+const CompanyInfos = () => {
     const navigate = useNavigate();
     const { companyName = '-', id = '' } = useParams();
 
@@ -16,3 +16,5 @@ export const CompanyInfos = () => {
         <Tree id={id} />
     </div>
 }
+
+export default CompanyInfos;

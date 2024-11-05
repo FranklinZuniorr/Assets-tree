@@ -6,7 +6,7 @@ import { CardCompany } from './components/card-company';
 import icon from '../../assets/images/icon.svg';
 import { Loading } from '../../components/loading';
 
-export const Companies = () => {
+const Companies = () => {
     const navigate = useNavigate();
     const { data: companies, isFetching } = useGetCompanies();
 
@@ -37,3 +37,5 @@ export const Companies = () => {
         </div>
     )
 }
+
+export default Companies;

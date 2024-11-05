@@ -1,1 +1,3 @@
-export { Companies } from './companies';
+import Companies from "./companies";
+
+export default Companies;

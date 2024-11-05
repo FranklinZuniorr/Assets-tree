@@ -1,1 +1,3 @@
-export { CompanyInfos } from './company-infos';
+import CompanyInfos from './company-infos';
+
+export default CompanyInfos;
