@@ -9,13 +9,14 @@ import energyIcon from '../../../../assets/images/thunderbolt.svg';
 import alertCircle from '../../../../assets/images/alert-circle.svg';
 import energyIconWhite from '../../../../assets/images/thunderbolt-white.svg';
 import alertCircleWhite from '../../../../assets/images/alert-circle-white.svg';
+import { Loading } from '../../../../components/loading';
 
 interface TreeProps {
     id: string;
 }
 
 export const Tree = ({ id }: TreeProps) => {
-    const allElements = useAllElements(id);
+    const { array: allElements, isLoading } = useAllElements(id);
     const filteredElements = getFilteredChildrenStart(allElements);
     const [state, dispatch] = useReducer(assetReducer, initialState);
 
@@ -72,21 +73,25 @@ export const Tree = ({ id }: TreeProps) => {
                     </button>
                 </div>
             </div>
-            <div className={styles.tree_content}>
-                {
-                    filteredElements.map(element => (
-                        <RecursiveElement 
-                        key={element.id} 
-                        element={element} 
-                        elements={allElements} 
-                        filters={{ 
-                            assetSensorType: state.assetSensorType as ENUM_ASSET_SENSOR_TYPE, 
-                            assetStatus: state.assetStatus as ENUM_ASSET_STATUS, 
-                            elementName: state.elementName
-                        }}/>
-                    ))
-                }
-            </div>
+            {
+                isLoading ?
+                <Loading />:
+                <div className={styles.tree_content}>
+                    {
+                        filteredElements.map(element => (
+                            <RecursiveElement 
+                            key={element.id} 
+                            element={element} 
+                            elements={allElements} 
+                            filters={{ 
+                                assetSensorType: state.assetSensorType as ENUM_ASSET_SENSOR_TYPE, 
+                                assetStatus: state.assetStatus as ENUM_ASSET_STATUS, 
+                                elementName: state.elementName
+                            }}/>
+                        ))
+                    }
+                </div>
+            }
         </div>
     )
 }

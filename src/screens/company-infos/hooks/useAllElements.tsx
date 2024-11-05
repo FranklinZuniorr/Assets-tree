@@ -42,29 +42,32 @@ const determineElementType = (element: LocationExternal | AssetExternal): ENUM_E
 };
 
 
-export const useAllElements = (companyId: string): (LocationInternal | AssetInternal)[] => {
-    const { data: locations } = useGetLocations(companyId);
-    const { data: assets } = useGetAssets(companyId);
+export const useAllElements = (companyId: string): {array: (LocationInternal | AssetInternal)[], isLoading: boolean}  => {
+    const { data: locations, isFetching: isFetchingLocation } = useGetLocations(companyId);
+    const { data: assets, isFetching: isFetchingAssets } = useGetAssets(companyId);
 
-    return useMemo(() => {
-        if (locations && assets) {
-            const transformedLocations: LocationInternal[] = locations
-                .map((location) => ({
-                    ...location,
-                    elementType: determineElementType(location)
-                }));
-
-            const transformedAssets: AssetInternal[] = assets
-                .map((asset) => ({
-                    ...asset,
-                    elementType: determineElementType(asset)
-                }));
-
-            const allElements = [...transformedLocations, ...transformedAssets];
-
-            return allElements;
-        }
-
-        return [];
-    }, [locations, assets]);
+    return {
+        array: useMemo(() => {
+            if (locations && assets) {
+                const transformedLocations: LocationInternal[] = locations
+                    .map((location) => ({
+                        ...location,
+                        elementType: determineElementType(location)
+                    }));
+    
+                const transformedAssets: AssetInternal[] = assets
+                    .map((asset) => ({
+                        ...asset,
+                        elementType: determineElementType(asset)
+                    }));
+    
+                const allElements = [...transformedLocations, ...transformedAssets];
+    
+                return allElements;
+            }
+    
+            return [];
+        }, [locations, assets]),
+        isLoading: isFetchingAssets || isFetchingLocation
+    };
 };
