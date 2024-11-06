@@ -4,7 +4,7 @@ A React-based platform for efficiently managing and visualizing industrial asset
 
 Site link: https://assets-tree.netlify.app/
 
-[Screencast from 2024-11-05 17-06-39.webm](https://github.com/user-attachments/assets/65556beb-dd10-4cce-b4ac-36d727e5a6ee)
+[Screencast from 2024-11-05 23-07-57.webm](https://github.com/user-attachments/assets/d8b192ad-5f29-4cf3-88e4-74ec64611542)
 
 ## Key Features
 
