@@ -38,11 +38,34 @@
     .recursiveElement_childrens {
         display: flex;
         flex-direction: column;
+        position: relative;
         gap: 0.5rem;
-        margin-left: 2rem;
+        padding-left: 1.5rem;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0.7rem;
+            width: 0.2rem;
+            height: 0%;
+            background-color: var(--white-blue);
+            transition: 0.2s;
+            border-radius: 0.5rem;
+            animation: division 1s ease 0s 1 normal forwards;
+        }
     }
 
     .recursiveElement_childrens__hide {
         display: none;
     }
+}
+
+@keyframes division {
+	0% {
+		height: 0%;
+	}
+
+	100% {
+		height: 100%;
+	}
 }

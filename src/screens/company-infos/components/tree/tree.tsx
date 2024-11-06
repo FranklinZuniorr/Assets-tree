@@ -66,7 +66,7 @@ export const Tree = ({ id }: TreeProps) => {
                             <img src={energyIconWhite} alt='energy' /> :
                             <img src={energyIcon} alt='energy-white' />
                         }
-                        Sensor de energia
+                        Energy sensor
                     </button>
                     <button 
                     className={`${styles.tree_filters_btns_btn} ${state.assetStatus ? styles.tree_filters_btns_btn__selected : ''}`}
@@ -77,7 +77,7 @@ export const Tree = ({ id }: TreeProps) => {
                             <img src={alertCircleWhite} alt='energy' /> :
                             <img src={alertCircle} alt='energy' />
                         }
-                        Crítico
+                        Critical alert
                     </button>
                 </div>
             </div>

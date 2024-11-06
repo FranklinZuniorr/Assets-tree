@@ -37,6 +37,22 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
     const isVisible = isFiltering ? open ? true : false : true;
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
+    const validation1 = !!((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) && 
+        (filters.assetStatus && (element as AssetInternal).status === filters.assetStatus) &&
+        (filters.assetSensorType && (element as AssetInternal).sensorType === filters.assetSensorType));
+
+    const validation2 = !!((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) && 
+    (filters.assetStatus && (element as AssetInternal).status === filters.assetStatus));
+
+    const validation3 = !!((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) && 
+    (filters.assetSensorType && (element as AssetInternal).sensorType === filters.assetSensorType));
+
+    const validation4 = !!((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) ||
+    (filters.assetStatus && (element as AssetInternal).status === filters.assetStatus) ||
+    (filters.assetSensorType && (element as AssetInternal).sensorType === filters.assetSensorType));
+    
+    const filterValidation =  validation1 || validation2 || validation3 || validation4;
+
     const handleSetIsOpenTree = (value: boolean) => {
         if (setIsOpenTree) {
             setIsOpenTree(value);
@@ -44,25 +60,8 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
     }
 
     useEffect(() => {
-        const validation1 = !!((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) && 
-        (filters.assetStatus && (element as AssetInternal).status === filters.assetStatus) &&
-        (filters.assetSensorType && (element as AssetInternal).sensorType === filters.assetSensorType));
-
-        const validation2 = !!((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) && 
-        (filters.assetStatus && (element as AssetInternal).status === filters.assetStatus));
-
-        const validation3 = !!((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) && 
-        (filters.assetSensorType && (element as AssetInternal).sensorType === filters.assetSensorType));
-
-        const validation4 = !!((filters.elementName && element.name.toLowerCase().includes(filters.elementName.toLowerCase())) ||
-        (filters.assetStatus && (element as AssetInternal).status === filters.assetStatus) ||
-        (filters.assetSensorType && (element as AssetInternal).sensorType === filters.assetSensorType));
-
         if(
-            validation1 ||
-            validation2 ||
-            validation3 ||
-            validation4
+            filterValidation
         ) {
             handleSetIsOpenTree(true);
             setIsOpen(true);
@@ -133,7 +132,10 @@ export const RecursiveElement = ({ elements, element, setIsOpenTree, filters }: 
                 src={arrowIcon} 
                 alt='arrow' 
                 style={{ 
-                    transform: open ? 'rotate(90deg)' : 'rotate(0deg)',
+                    transform: filterValidation ? 'rotate(180deg)' : open ? 'rotate(90deg)' : 'rotate(0deg)',
+                    filter: filterValidation ? 
+                    'brightness(0) saturate(100%) invert(21%) sepia(92%) saturate(2094%) hue-rotate(199deg) brightness(93%) contrast(101%)' : 
+                    'none'
                 }} 
                 />
             }
